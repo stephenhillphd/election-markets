@@ -321,15 +321,19 @@ th h3 {
 /* Add this after the header-border styles */
 .update-info {
     text-align: center;
-    margin: -20px 0 20px 0;
-    padding: 10px;
+    margin: 20px auto;
+    padding: 12px 20px;
     color: #64748b;
-    font-size: 0.9em;
+    font-size: 0.95em;
     background: white;
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    position: relative;
+    z-index: 1;
 }
 
 .update-info p {
     margin: 0;
+    line-height: 1.4;
 }
