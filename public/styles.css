@@ -67,7 +67,7 @@ h1 {
 /* Update Info Banner */
 .update-info {
     text-align: center;
-    margin: 20px auto;
+    margin: 0 auto 30px auto;
     padding: 12px 20px;
     color: #64748b;
     font-size: 0.95em;
