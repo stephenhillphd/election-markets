@@ -18,6 +18,9 @@
                 <h1>2024 Presidential Election Prediction Markets</h1>
             </div>
             <div class="header-border"></div>
+            <div class="update-info">
+                <p>PredictIt prices update every minute. All other market prices update every 15 minutes.</p>
+            </div>
         </header>
         
         <div class="table-container">
@@ -64,20 +67,18 @@
                 </tbody>
             </table>
         </div>
-        <!-- Add this right before the disclaimer div -->
+        <div class="donate-section">
+            <p>If you like the site, please support us by buying us a coffee at</p>
+            <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+            <script type='text/javascript'>
+                kofiwidget2.init('Support Us on Ko-fi', '#29abe0', 'stephenhill42026');
+                kofiwidget2.draw();
+            </script>
         </div>
-        <!-- Replace the existing donate-section div with this -->
-<div class="donate-section">
-    <p>If you like the site, please support us by buying us a coffee at</p>
-    <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
-    <script type='text/javascript'>
-        kofiwidget2.init('Support Us on Ko-fi', '#29abe0', 'stephenhill42026');
-        kofiwidget2.draw();
-    </script>
-</div>
         <div class="disclaimer">
             <p>The information provided on this site is for informational purposes only and should not be considered financial advice. 
-               Market prices are delayed and may not reflect current values. Please verify all information independently before making any decisions.</p>
+               Market prices are delayed and may not reflect current values. Note that it is normal for prediction percentages to add up to more than 100% across candidates due to market mechanics and fees.
+               Please verify all information independently before making any decisions.</p>
         </div>
     </div>
 
@@ -349,12 +350,14 @@
         fetchOddsData();
         fetchPolymarketData();
 
-        // Update every 15 minutes
+        // Update PredictIt every minute
+        setInterval(fetchPredictItData, 60000); // 1 minute = 60000 milliseconds
+
+        // Update other sources every 15 minutes
         setInterval(() => {
-            fetchPredictItData();
             fetchOddsData();
             fetchPolymarketData();
-        }, 900000); // 15 minutes
+        }, 900000); // 15 minutes = 15 * 60 * 1000 = 900000 milliseconds
     </script>
 </body>
 </html> 
