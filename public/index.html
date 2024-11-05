@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 Presidential Election Prediction Markets</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="Live prediction market prices for the 2024 US Presidential Election">
+    <meta property="og:title" content="2024 Presidential Election Prediction Markets">
+    <meta property="og:description" content="Live prediction market prices from PredictIt and other sources">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <div class="header-content">
+                <i class="fas fa-chart-line header-icon"></i>
+                <h1>2024 Presidential Election Prediction Markets</h1>
+            </div>
+            <div class="header-border"></div>
+        </header>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Market</th>
+                        <th>
+                            <img src="https://az620379.vo.msecnd.net/images/Contracts/small_3c10062b-0942-4fc3-9ace-bb6abdb790ff.jpg" alt="Trump">
+                            <h3>Donald Trump</h3>
+                        </th>
+                        <th>
+                            <img src="https://az620379.vo.msecnd.net/images/Contracts/small_42e624ca-be5f-4c3e-8939-86bb42b0314d.jpg" alt="Harris">
+                            <h3>Kamala Harris</h3>
+                        </th>
+                        <th>Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PredictIt</td>
+                        <td class="price trump-price">--</td>
+                        <td class="price harris-price">--</td>
+                        <td class="update-time">--</td>
+                    </tr>
+                    <tr>
+                        <td>Bovada</td>
+                        <td class="price trump-price odds-price">--</td>
+                        <td class="price harris-price odds-price">--</td>
+                        <td class="update-time">--</td>
+                    </tr>
+                    <tr>
+                        <td>BetOnline</td>
+                        <td class="price trump-price odds-price">--</td>
+                        <td class="price harris-price odds-price">--</td>
+                        <td class="update-time">--</td>
+                    </tr>
+                    <tr>
+                        <td>Polymarket</td>
+                        <td class="price trump-price poly-price">--</td>
+                        <td class="price harris-price poly-price">--</td>
+                        <td class="update-time">--</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="disclaimer">
+            <p>The information provided on this site is for informational purposes only and should not be considered financial advice. 
+               Market prices are delayed and may not reflect current values. Please verify all information independently before making any decisions.</p>
+        </div>
+    </div>
+
+    <script>
+        function formatEasternTime(date) {
+            return new Date(date).toLocaleString('en-US', {
+                timeZone: 'America/New_York',
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                hour12: true
+            }) + ' ET';
+        }
+
+        function updatePrice(element, newValue, isError = false) {
+            if (isError) {
+                element.textContent = 'Error';
+                element.classList.add('error');
+                return;
+            }
+
+            const oldValue = parseFloat(element.textContent);
+            const newNumericValue = parseFloat(newValue);
+            
+            // Add loading state
+            element.classList.add('loading');
+            
+            setTimeout(() => {
+                // Remove loading and update value
+                element.classList.remove('loading');
+                element.textContent = newValue;
+                
+                // Add highlight animation
+                element.classList.add('price-updated');
+                
+                // Add arrow indicator if we can compare values
+                if (!isNaN(oldValue) && !isNaN(newNumericValue)) {
+                    const arrow = document.createElement('span');
+                    arrow.style.marginLeft = '5px';
+                    arrow.style.fontSize = '0.7em';
+                    if (newNumericValue > oldValue) {
+                        arrow.innerHTML = '↑';
+                        arrow.style.color = '#22c55e';
+                    } else if (newNumericValue < oldValue) {
+                        arrow.innerHTML = '↓';
+                        arrow.style.color = '#ef4444';
+                    }
+                    element.appendChild(arrow);
+                    
+                    // Remove arrow after 2 seconds
+                    setTimeout(() => arrow.remove(), 2000);
+                }
+                
+                // Remove highlight class after animation
+                setTimeout(() => {
+                    element.classList.remove('price-updated');
+                }, 2000);
+            }, 500);
+        }
+
+        function startLoading() {
+            document.querySelector('.table-container').classList.add('loading');
+        }
+
+        function stopLoading() {
+            document.querySelector('.table-container').classList.remove('loading');
+        }
+
+        async function fetchPredictItData() {
+            startLoading();
+            try {
+                console.log('Initiating PredictIt data fetch...');
+                
+                const response = await fetch('/api/predictit');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!data.contracts) {
+                    throw new Error('No contracts data in API response');
+                }
+                
+                const trump = data.contracts.find(c => c.shortName === "Trump");
+                const harris = data.contracts.find(c => c.shortName === "Harris");
+                
+                if (!trump || !harris) {
+                    throw new Error('Could not find Trump or Harris contract');
+                }
+
+                // Update prices in the table
+                document.querySelector('tr:nth-child(1) .trump-price').textContent = 
+                    updatePrice(
+                        document.querySelector('tr:nth-child(1) .trump-price'),
+                        `${(trump.lastTradePrice * 100).toFixed(0)}%`
+                    );
+                document.querySelector('tr:nth-child(1) .harris-price').textContent = 
+                    updatePrice(
+                        document.querySelector('tr:nth-child(1) .harris-price'),
+                        `${(harris.lastTradePrice * 100).toFixed(0)}%`
+                    );
+                
+                // Adjust timestamp to Eastern Time
+                const timestamp = new Date(data.timeStamp);
+                timestamp.setHours(timestamp.getHours() - 1);
+                const updateTime = formatEasternTime(timestamp);
+                document.querySelector('tr:nth-child(1) .update-time').textContent = updateTime;
+                
+            } catch (error) {
+                console.error('PredictIt error:', error);
+                document.querySelector('tr:nth-child(1) .update-time').textContent = 
+                    `Error: ${formatEasternTime(new Date())}`;
+                document.querySelectorAll('tr:nth-child(1) .price').forEach(el => {
+                    el.textContent = 'Error';
+                    el.classList.add('error');
+                });
+            } finally {
+                stopLoading();
+            }
+        }
+
+        // Initial fetch
+        fetchPredictItData();
+        
+        // Update every minute
+        setInterval(fetchPredictItData, 60000);
+
+        async function fetchOddsData() {
+            startLoading();
+            try {
+                console.log('Initiating odds data fetch...');
+                
+                const response = await fetch('/api/odds');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+
+                // Update Bovada odds (row 2)
+                const bovada = data[0]?.bookmakers.find(b => b.key.toLowerCase() === 'bovada');
+                if (bovada) {
+                    const trump = bovada.markets[0].outcomes.find(o => o.name.includes('Trump'));
+                    const harris = bovada.markets[0].outcomes.find(o => o.name.includes('Harris'));
+                    
+                    if (trump) {
+                        document.querySelector('tr:nth-child(2) .trump-price')
+                            .textContent = updatePrice(
+                                document.querySelector('tr:nth-child(2) .trump-price'),
+                                `${(1/trump.price * 100).toFixed(0)}%`
+                            );
+                    }
+                    if (harris) {
+                        document.querySelector('tr:nth-child(2) .harris-price')
+                            .textContent = updatePrice(
+                                document.querySelector('tr:nth-child(2) .harris-price'),
+                                `${(1/harris.price * 100).toFixed(0)}%`
+                            );
+                    }
+                    document.querySelector('tr:nth-child(2) .update-time').textContent = formatEasternTime(new Date());
+                }
+
+                // Update BetOnline odds (row 3)
+                const betonline = data[0]?.bookmakers.find(b => b.key.toLowerCase() === 'betonlineag');
+                if (betonline) {
+                    const trump = betonline.markets[0].outcomes.find(o => o.name.includes('Trump'));
+                    const harris = betonline.markets[0].outcomes.find(o => o.name.includes('Harris'));
+                    
+                    if (trump) {
+                        document.querySelector('tr:nth-child(3) .trump-price')
+                            .textContent = updatePrice(
+                                document.querySelector('tr:nth-child(3) .trump-price'),
+                                `${(1/trump.price * 100).toFixed(0)}%`
+                            );
+                    }
+                    if (harris) {
+                        document.querySelector('tr:nth-child(3) .harris-price')
+                            .textContent = updatePrice(
+                                document.querySelector('tr:nth-child(3) .harris-price'),
+                                `${(1/harris.price * 100).toFixed(0)}%`
+                            );
+                    }
+                    document.querySelector('tr:nth-child(3) .update-time').textContent = formatEasternTime(new Date());
+                }
+                
+            } catch (error) {
+                console.error('Odds API error:', error);
+                ['tr:nth-child(2)', 'tr:nth-child(3)'].forEach(selector => {
+                    document.querySelector(`${selector} .update-time`).textContent = 
+                        `Error: ${formatEasternTime(new Date())}`;
+                    document.querySelectorAll(`${selector} .price`).forEach(el => {
+                        el.textContent = 'Error';
+                        el.classList.add('error');
+                    });
+                });
+            } finally {
+                stopLoading();
+            }
+        }
+
+        // Add odds fetch to the initial load
+        fetchOddsData();
+        
+        // Update odds every 15 minutes along with PredictIt
+        setInterval(() => {
+            fetchPredictItData();
+            fetchOddsData();
+        }, 900000); // 15 minutes = 15 * 60 * 1000 = 900000 milliseconds
+
+        async function fetchPolymarketData() {
+            startLoading();
+            try {
+                console.log('Initiating Polymarket data fetch...');
+                
+                const response = await fetch('/api/polymarket');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+
+                if (data.trump !== null) {
+                    document.querySelector('tr:nth-child(4) .trump-price')
+                        .textContent = updatePrice(
+                            document.querySelector('tr:nth-child(4) .trump-price'),
+                            `${(data.trump * 100).toFixed(0)}%`
+                        );
+                }
+                if (data.harris !== null) {
+                    document.querySelector('tr:nth-child(4) .harris-price')
+                        .textContent = updatePrice(
+                            document.querySelector('tr:nth-child(4) .harris-price'),
+                            `${(data.harris * 100).toFixed(0)}%`
+                        );
+                }
+
+                document.querySelector('tr:nth-child(4) .update-time').textContent = 
+                    formatEasternTime(new Date(data.timestamp));
+                
+            } catch (error) {
+                console.error('Polymarket API error:', error);
+                document.querySelector('tr:nth-child(4) .update-time').textContent = 
+                    `Error: ${formatEasternTime(new Date())}`;
+                document.querySelectorAll('tr:nth-child(4) .price').forEach(el => {
+                    el.textContent = 'Error';
+                    el.classList.add('error');
+                });
+            } finally {
+                stopLoading();
+            }
+        }
+
+        // Update the interval to include Polymarket
+        setInterval(() => {
+            fetchPredictItData();
+            fetchOddsData();
+            fetchPolymarketData();
+        }, 900000); // 15 minutes
+
+        // Add initial Polymarket fetch
+        fetchPolymarketData();
+
+        // Initial fetches
+        fetchPredictItData();
+        fetchOddsData();
+        fetchPolymarketData();
+
+        // Update every 15 minutes
+        setInterval(() => {
+            fetchPredictItData();
+            fetchOddsData();
+            fetchPolymarketData();
+        }, 900000); // 15 minutes
+    </script>
+</body>
+</html> 

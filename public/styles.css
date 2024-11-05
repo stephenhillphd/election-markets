@@ -1,0 +1,289 @@
+/* Add Google Fonts import at the top of the file */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Update base typography */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.site-header {
+    padding: 30px 0;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    position: relative;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.header-icon {
+    font-size: 2em;
+    color: #2c3e50;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin: 0;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.header-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        #E81B23 0%, 
+        #E81B23 45%, 
+        #ffffff 50%, 
+        #00AEF3 55%, 
+        #00AEF3 100%
+    );
+}
+
+.table-container {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0 auto;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+th:last-child, td:last-child {
+    border-right: none;
+}
+
+thead tr {
+    background-color: #f8f9fa;
+}
+
+th {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.1em;
+    letter-spacing: -0.3px;
+}
+
+/* Alternating row colors */
+tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Hover effect */
+tbody tr:hover {
+    background-color: #f0f4f8;
+    transform: scale(1.002);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+/* Market column styling */
+td:first-child {
+    font-weight: 500;
+    color: #2c3e50;
+    text-align: left;
+    letter-spacing: -0.2px;
+}
+
+/* Price styling */
+.price {
+    font-size: 26px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    letter-spacing: -0.5px;
+}
+
+/* Update time styling */
+.update-time {
+    color: #64748b;
+    font-size: 0.9em;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+}
+
+/* Candidate images in header */
+th img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    display: block;
+    margin: 0 auto 10px;
+    border: 3px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+th img:hover {
+    transform: scale(1.05);
+}
+
+th h3 {
+    margin: 5px 0;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #2c3e50;
+    letter-spacing: -0.3px;
+}
+
+/* Price colors with improved contrast */
+.trump-price {
+    color: #E81B23;
+    text-shadow: 0 0 1px rgba(232, 27, 35, 0.1);
+}
+
+.harris-price {
+    color: #00AEF3;
+    text-shadow: 0 0 1px rgba(0, 174, 243, 0.1);
+}
+
+/* Error state */
+.price.error {
+    color: #ff0000 !important;
+    opacity: 0.8;
+    font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .table-container {
+        padding: 10px;
+    }
+    
+    th, td {
+        padding: 10px;
+    }
+    
+    .price {
+        font-size: 28px;
+    }
+    
+    th img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+.disclaimer {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #2c3e50;
+}
+
+.disclaimer p {
+    margin: 0;
+    color: #475569;
+    font-size: 0.95em;
+    line-height: 1.6;
+    text-align: center;
+    letter-spacing: -0.2px;
+}
+
+/* Add new styles for visual feedback */
+@keyframes highlight {
+    0% {
+        background-color: rgba(255, 255, 0, 0.2);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.price-updated {
+    animation: highlight 2s ease-out;
+}
+
+.loading {
+    position: relative;
+    opacity: 0.6;
+}
+
+.loading::after {
+    content: '...';
+    position: absolute;
+    right: -20px;
+    animation: ellipsis 1.5s infinite;
+}
+
+@keyframes ellipsis {
+    0% { content: '.'; }
+    33% { content: '..'; }
+    66% { content: '...'; }
+}
+
+/* Add loading indicator */
+.table-container.loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        #E81B23 0%, 
+        #00AEF3 50%, 
+        #E81B23 100%
+    );
+    animation: loading 2s infinite linear;
+    z-index: 1;
+}
+
+@keyframes loading {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+} 
