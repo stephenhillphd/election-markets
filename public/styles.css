@@ -1,7 +1,6 @@
-/* Add Google Fonts import at the top of the file */
+/* Base Typography and Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* Update base typography */
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
     margin: 0;
@@ -12,12 +11,14 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Layout and Container */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
+/* Header Styles */
 .site-header {
     padding: 30px 0;
     margin-bottom: 40px;
@@ -63,6 +64,27 @@ h1 {
     );
 }
 
+/* Update Info Banner */
+.update-info {
+    text-align: center;
+    margin: 20px auto;
+    padding: 12px 20px;
+    color: #64748b;
+    font-size: 0.95em;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    position: relative;
+    z-index: 1;
+}
+
+.update-info p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Table Container and Styles */
 .table-container {
     background: white;
     border-radius: 10px;
@@ -104,7 +126,7 @@ th {
     letter-spacing: -0.3px;
 }
 
-/* Alternating row colors */
+/* Table Row Styles */
 tbody tr:nth-child(even) {
     background-color: #f8f9fa;
 }
@@ -113,7 +135,6 @@ tbody tr:nth-child(odd) {
     background-color: #ffffff;
 }
 
-/* Hover effect */
 tbody tr:hover {
     background-color: #f0f4f8;
     transform: scale(1.002);
@@ -121,41 +142,16 @@ tbody tr:hover {
     transition: all 0.2s ease;
 }
 
-/* Market column styling */
-td:first-child {
-    font-weight: 500;
-    color: #2c3e50;
-    text-align: left;
-    letter-spacing: -0.2px;
-}
-
-/* Price styling */
-.price {
-    font-size: 26px;
-    font-weight: 700;
-    transition: all 0.3s ease;
-    letter-spacing: -0.5px;
-}
-
-/* Update time styling */
-.update-time {
-    color: #64748b;
-    font-size: 0.9em;
-    font-weight: 400;
-    letter-spacing: -0.2px;
-}
-
-/* Candidate images in header */
+/* Candidate Images */
 th img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    margin-bottom: 10px;
-    display: block;
     margin: 0 auto 10px;
     border: 3px solid white;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     transition: transform 0.2s ease;
+    display: block;
 }
 
 th img:hover {
@@ -170,7 +166,21 @@ th h3 {
     letter-spacing: -0.3px;
 }
 
-/* Price colors with improved contrast */
+/* Price and Text Styles */
+td:first-child {
+    font-weight: 500;
+    color: #2c3e50;
+    text-align: left;
+    letter-spacing: -0.2px;
+}
+
+.price {
+    font-size: 26px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    letter-spacing: -0.5px;
+}
+
 .trump-price {
     color: #E81B23;
     text-shadow: 0 0 1px rgba(232, 27, 35, 0.1);
@@ -181,69 +191,13 @@ th h3 {
     text-shadow: 0 0 1px rgba(0, 174, 243, 0.1);
 }
 
-/* Error state */
-.price.error {
-    color: #ff0000 !important;
-    opacity: 0.8;
-    font-weight: 600;
+.update-time {
+    color: #64748b;
+    font-size: 0.9em;
+    white-space: nowrap;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .table-container {
-        padding: 10px;
-    }
-    
-    th, td {
-        padding: 10px;
-    }
-    
-    .price {
-        font-size: 28px;
-    }
-    
-    th img {
-        width: 50px;
-        height: 50px;
-    }
-}
-
-.disclaimer {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    border-left: 4px solid #2c3e50;
-}
-
-.disclaimer p {
-    margin: 0;
-    color: #475569;
-    font-size: 0.95em;
-    line-height: 1.6;
-    text-align: center;
-    letter-spacing: -0.2px;
-}
-
-/* Add new styles for visual feedback */
-@keyframes highlight {
-    0% {
-        background-color: rgba(255, 255, 0, 0.2);
-    }
-    100% {
-        background-color: transparent;
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
+/* Loading and Animation States */
 .price-updated {
     animation: highlight 2s ease-out;
 }
@@ -260,13 +214,6 @@ th h3 {
     animation: ellipsis 1.5s infinite;
 }
 
-@keyframes ellipsis {
-    0% { content: '.'; }
-    33% { content: '..'; }
-    66% { content: '...'; }
-}
-
-/* Add loading indicator */
 .table-container.loading::before {
     content: '';
     position: absolute;
@@ -283,12 +230,24 @@ th h3 {
     z-index: 1;
 }
 
+/* Animations */
+@keyframes highlight {
+    0% { background-color: rgba(255, 255, 0, 0.2); }
+    100% { background-color: transparent; }
+}
+
 @keyframes loading {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
 }
 
-/* Add this before the disclaimer styles */
+@keyframes ellipsis {
+    0% { content: '.'; }
+    33% { content: '..'; }
+    66% { content: '...'; }
+}
+
+/* Donate Section */
 .donate-section {
     text-align: center;
     margin: 30px 0;
@@ -318,22 +277,51 @@ th h3 {
     border-radius: 4px;
 }
 
-/* Add this after the header-border styles */
-.update-info {
-    text-align: center;
-    margin: 20px auto;
-    padding: 12px 20px;
-    color: #64748b;
-    font-size: 0.95em;
-    background: white;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    position: relative;
-    z-index: 1;
+/* Disclaimer */
+.disclaimer {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #2c3e50;
 }
 
-.update-info p {
+.disclaimer p {
     margin: 0;
-    line-height: 1.4;
+    color: #475569;
+    font-size: 0.95em;
+    line-height: 1.6;
+    text-align: center;
+    letter-spacing: -0.2px;
+}
+
+/* Error States */
+.price.error {
+    color: #ff0000 !important;
+    opacity: 0.8;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .table-container {
+        padding: 10px;
+    }
+    
+    th, td {
+        padding: 10px;
+    }
+    
+    .price {
+        font-size: 24px;
+    }
+    
+    th img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
 }
