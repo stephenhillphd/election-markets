@@ -208,36 +208,6 @@ th h3 {
     }
 }
 
-/* Add this before the disclaimer styles */
-.donate-section {
-    text-align: center;
-    margin: 30px 0;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.donate-section p {
-    margin: 0 0 15px 0;
-    color: #2c3e50;
-    font-size: 1.1em;
-}
-
-.kofi-button {
-    display: inline-block;
-    transition: transform 0.2s ease;
-}
-
-.kofi-button:hover {
-    transform: scale(1.05);
-}
-
-.kofi-button img {
-    height: 36px;
-    border-radius: 4px;
-}
-
 .disclaimer {
     margin-top: 20px;
     padding: 15px;
@@ -316,4 +286,50 @@ th h3 {
 @keyframes loading {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
-} 
+}
+
+/* Add this before the disclaimer styles */
+.donate-section {
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.donate-section p {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    font-size: 1.1em;
+}
+
+.kofi-button {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.kofi-button:hover {
+    transform: scale(1.05);
+}
+
+.kofi-button img {
+    height: 36px;
+    border-radius: 4px;
+}
+
+/* Add this after the header-border styles */
+.update-info {
+    text-align: center;
+    margin: -20px 0 20px 0;
+    padding: 10px;
+    color: #64748b;
+    font-size: 0.9em;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.update-info p {
+    margin: 0;
+}
